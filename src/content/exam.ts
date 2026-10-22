@@ -3,10 +3,11 @@
  * is one mark (one tick). Use g = 9,8 m·s⁻² throughout, as on the data sheet.
  */
 import type { ExamQuestion } from "./types";
+import { EXAM_EXTRA } from "./exam-extra";
 
 const m = String.raw;
 
-export const EXAM_QUESTIONS: ExamQuestion[] = [
+const EXAM_CORE: ExamQuestion[] = [
   // ======================================================== Grade 10 · Physics
   {
     id: "g10-motion-taxi",
@@ -433,7 +434,7 @@ export const EXAM_QUESTIONS: ExamQuestion[] = [
     parts: [
       { q: "Define a projectile.", marks: 2, level: "recall", memo: ["An object upon which the only force acting", "is the gravitational force"] },
       { q: "Calculate the maximum height reached above the building.", marks: 3, level: "comprehension", memo: [m`$v_f^2 = v_i^2 + 2a\Delta y$`, m`$0 = 14^2 + 2(-9{,}8)\Delta y$`, m`$\Delta y = 10\ \text{m}$`] },
-      { q: "Calculate the time the ball takes to reach the ground.", marks: 4, level: "analysis", memo: [m`$\Delta y = v_i\Delta t + \tfrac12 a\Delta t^2$ (up positive)`, m`$-20 = 14\Delta t - 4{,}9\Delta t^2$`, m`$4{,}9\Delta t^2 - 14\Delta t - 20 = 0$`, m`$\Delta t = 3{,}86\ \text{s}$`] },
+      { q: "Calculate the time the ball takes to reach the ground.", marks: 4, level: "analysis", memo: [m`$\Delta y = v_i\Delta t + \tfrac12 a\Delta t^2$ (up positive)`, m`$-20 = 14\Delta t - 4{,}9\Delta t^2$`, m`$4{,}9\Delta t^2 - 14\Delta t - 20 = 0$`, m`$\Delta t = 3{,}90\ \text{s}$`] },
       { q: "Sketch the velocity-time graph for the motion (up positive). Label the time at the highest point.", marks: 3, level: "analysis", memo: ["A straight line with a negative gradient", m`Starting at $+14\ \text{m·s}^{-1}$`, m`Crossing the time axis at $1{,}43\ \text{s}$`] },
     ],
   },
@@ -610,3 +611,5 @@ export const EXAM_QUESTIONS: ExamQuestion[] = [
     ],
   },
 ];
+
+export const EXAM_QUESTIONS: ExamQuestion[] = [...EXAM_CORE, ...EXAM_EXTRA];
