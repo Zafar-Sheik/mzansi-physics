@@ -1,3 +1,940 @@
 import type { Lesson } from "../types";
 
-export const G10_PHYSICS: Lesson[] = [];
+const m = String.raw;
+
+export const G10_PHYSICS: Lesson[] = [
+  // ------------------------------------------------------------------ Motion 1
+  {
+    slug: "describing-motion",
+    topic: "g10-motion",
+    order: 1,
+    title: "Describing motion: vectors, distance & displacement",
+    tagline: "Where are you, how far did you go – and in which direction?",
+    emoji: "🧭",
+    caps: "CAPS Gr 10 · Mechanics: vectors and scalars; motion in one dimension – reference frame, position, distance, displacement, speed, average velocity, acceleration.",
+    objectives: [
+      "Tell vectors and scalars apart",
+      "Use a reference point and a positive direction",
+      "Calculate distance, displacement, speed and velocity",
+      "Explain what acceleration means",
+    ],
+    styles: ["visual", "kinaesthetic", "read-write"],
+    xp: 60,
+    terms: [
+      { term: "Scalar", def: "A physical quantity with magnitude (size) only, e.g. distance, speed, mass, time, energy." },
+      { term: "Vector", def: "A physical quantity with magnitude AND direction, e.g. displacement, velocity, acceleration, force." },
+      { term: "Frame of reference", def: "A reference point (origin) plus a set of directions (which way is positive) used to describe position." },
+      { term: "Position", def: "Where an object is relative to a reference point." },
+      { term: "Distance", def: "The total length of the path travelled (a scalar)." },
+      { term: "Displacement", def: m`The change in position: $\Delta x = x_f - x_i$ (a vector – straight line from start to end, with direction).` },
+      { term: "Speed", def: m`The rate of change of distance: $\text{speed} = \frac{\text{distance}}{\Delta t}$ (scalar).` },
+      { term: "Velocity", def: m`The rate of change of position: $v = \frac{\Delta x}{\Delta t}$ (vector).` },
+      { term: "Acceleration", def: m`The rate of change of velocity: $a = \frac{\Delta v}{\Delta t}$ (vector, in m·s⁻²).` },
+    ],
+    chunks: [
+      {
+        id: "hook",
+        title: "The taxi ride",
+        minutes: 4,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`A minibus taxi drives 3 km from Bree Street rank to a stop, then turns back 1 km to drop a passenger. The meter would say **4 km** travelled – but the taxi is only **2 km** from where it started. Physics needs both ideas: **distance** (how much road) and **displacement** (how far from the start, and which way).` },
+          { type: "text", md: m`To describe motion we always choose a **frame of reference**: a starting point (the origin, $x = 0$) and a **positive direction**. On these pages we usually take **right (or east, or up) as positive**.` },
+          { type: "widget", widget: "motion-lab" },
+        ],
+      },
+      {
+        id: "vectors",
+        title: "Scalars and vectors",
+        minutes: 6,
+        blocks: [
+          { type: "text", md: m`A **scalar** only has a size: "5 kg", "20 s", "300 m". A **vector** has a size **and a direction**: "300 m **east**", "12 m·s⁻¹ **upwards**". We draw vectors as arrows – the length shows the size, the arrowhead shows the direction.` },
+          {
+            type: "widget",
+            widget: "sorter",
+            props: {
+              id: "scalar-vector", title: "Scalar or vector?", buckets: ["Scalar", "Vector"], colour: "var(--t-mech)",
+              items: [
+                { text: "Mass", bucket: "Scalar" }, { text: "Velocity", bucket: "Vector" }, { text: "Time", bucket: "Scalar" }, { text: "Force", bucket: "Vector" },
+                { text: "Distance", bucket: "Scalar" }, { text: "Displacement", bucket: "Vector" }, { text: "Speed", bucket: "Scalar" }, { text: "Acceleration", bucket: "Vector" },
+                { text: "Energy", bucket: "Scalar" }, { text: "Weight", bucket: "Vector" },
+              ],
+            },
+          },
+          { type: "callout", variant: "memory", md: m`**V**ectors have a **V**ery clear direction. Speed and distance are the "lazy" scalars – they don't care which way you went.` },
+        ],
+      },
+      {
+        id: "distance-displacement",
+        title: "Distance, displacement, speed & velocity",
+        minutes: 9,
+        blocks: [
+          {
+            type: "worked",
+            title: "Walking to the spaza shop",
+            problem: m`Lerato walks 400 m east to the spaza shop, then 150 m west to a friend's house. It takes her 5 minutes. Calculate (a) her distance, (b) her displacement, (c) her average speed, (d) her average velocity.`,
+            steps: [
+              { md: m`(a) Distance $= 400 + 150 = 550\ \text{m}$`, why: "Distance adds up every step of the path, whatever the direction." },
+              { md: m`(b) Take east as positive: $\Delta x = +400 + (-150) = +250\ \text{m}$, i.e. $250\ \text{m}$ east.`, why: "Displacement only cares about where she ends up compared to where she started." },
+              { md: m`(c) $\Delta t = 5 \times 60 = 300\ \text{s}$; average speed $= \frac{550}{300} = 1{,}83\ \text{m·s}^{-1}$`, why: "Always change minutes to seconds (SI units)." },
+              { md: m`(d) $v_{ave} = \frac{\Delta x}{\Delta t} = \frac{250}{300} = 0{,}83\ \text{m·s}^{-1}$ east` },
+            ],
+          },
+          { type: "callout", variant: "mistake", md: m`Leaving out the **direction** on a vector answer costs a mark in the exam. "$0{,}83\ \text{m·s}^{-1}$" is a speed; "$0{,}83\ \text{m·s}^{-1}$ **east**" is a velocity.` },
+          {
+            type: "practice",
+            id: "dist-disp-practice",
+            problems: [
+              { q: m`A runner completes one full lap of a 400 m track in 80 s. What is her **displacement** (in m) for the lap?`, answer: "0", unit: "m", hint: "Where does she finish compared to where she started?", solution: m`She ends where she started, so $\Delta x = 0\ \text{m}$ – even though the distance is $400\ \text{m}$.` },
+              { q: m`For the same lap (400 m in 80 s), calculate her average **speed**.`, answer: "5", unit: "m·s⁻¹", solution: m`$$\text{speed} = \frac{400}{80} = 5\ \text{m·s}^{-1}$$` },
+              { q: m`A car's velocity changes from $10\ \text{m·s}^{-1}$ to $25\ \text{m·s}^{-1}$ east in $5\ \text{s}$. Calculate its acceleration.`, answer: "3", unit: "m·s⁻²", hint: m`$a = \frac{v_f - v_i}{\Delta t}$`, solution: m`$$a = \frac{\Delta v}{\Delta t} = \frac{25 - 10}{5} = 3\ \text{m·s}^{-2}\ \text{east}$$` },
+              { q: m`A cyclist moving at $8\ \text{m·s}^{-1}$ brakes to a stop in $4\ \text{s}$. Calculate the acceleration (take the direction of motion as positive).`, answer: "-2", unit: "m·s⁻²", solution: m`$$a = \frac{0 - 8}{4} = -2\ \text{m·s}^{-2}$$ The negative sign means the acceleration is opposite to the motion – the cyclist is slowing down.` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["speed-velocity"], title: "Speed vs velocity drill" } },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 5,
+        blocks: [
+          { type: "keypoints", points: ["Choose a reference point and a positive direction first.", "Distance and speed are scalars; displacement, velocity and acceleration are vectors.", m`$v = \frac{\Delta x}{\Delta t}$ and $a = \frac{\Delta v}{\Delta t}$.`, "Negative acceleration means it points opposite to the positive direction – not always 'slowing down'!"] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "describing-motion-quiz",
+            questions: [
+              { q: "Which one is a vector quantity?", options: ["Speed", "Distance", "Displacement", "Time"], answer: 2, explain: "Displacement has a direction; the others don't." },
+              { q: "You walk 3 m forward and 3 m back. Your displacement is…", options: ["6 m", "3 m", "0 m", "−3 m"], answer: 2, explain: "You end where you started: Δx = 0." },
+              { q: m`The SI unit of acceleration is…`, options: [m`m·s⁻¹`, m`m·s⁻²`, "km·h⁻¹", "N"], answer: 1, explain: "Change in velocity (m·s⁻¹) per second → m·s⁻²." },
+              { q: "A car moving in the positive direction has a negative acceleration. It is…", options: ["speeding up", "slowing down", "at rest", "moving backwards"], answer: 1, explain: "Velocity and acceleration point in opposite directions, so it slows down." },
+              { q: "Average velocity is defined as…", options: ["total distance ÷ time", "change in position ÷ time", "change in velocity ÷ time", "speed × time"], answer: 1, explain: m`$v_{ave} = \frac{\Delta x}{\Delta t}$.` },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Motion 2
+  {
+    slug: "equations-of-motion",
+    topic: "g10-motion",
+    order: 2,
+    title: "Motion graphs & the equations of motion",
+    tagline: "Read a graph like a story, then solve any constant-acceleration problem.",
+    emoji: "📈",
+    caps: "CAPS Gr 10 · Mechanics: graphs of position, velocity and acceleration vs time; gradients and areas; the equations of motion for uniformly accelerated motion.",
+    objectives: [
+      "Describe motion from x-t, v-t and a-t graphs",
+      "Get velocity from the gradient of x-t and displacement from the area under v-t",
+      "Choose the right equation of motion and solve problems",
+    ],
+    styles: ["visual", "kinaesthetic", "read-write"],
+    xp: 80,
+    terms: [
+      { term: "Gradient of an x-t graph", def: "The velocity. A straight line means constant velocity; a curve means the velocity is changing." },
+      { term: "Gradient of a v-t graph", def: "The acceleration. A straight line means constant (uniform) acceleration." },
+      { term: "Area under a v-t graph", def: "The displacement." },
+      { term: "Equation 1", def: m`$v_f = v_i + a\Delta t$ (no $\Delta x$)` },
+      { term: "Equation 2", def: m`$\Delta x = v_i\Delta t + \tfrac{1}{2}a\Delta t^2$ (no $v_f$)` },
+      { term: "Equation 3", def: m`$v_f^2 = v_i^2 + 2a\Delta x$ (no $\Delta t$)` },
+      { term: "Equation 4", def: m`$\Delta x = \left(\frac{v_i + v_f}{2}\right)\Delta t$ (no $a$)` },
+      { term: "Uniform acceleration", def: "Velocity changes by the same amount every second (constant acceleration)." },
+    ],
+    chunks: [
+      {
+        id: "graphs",
+        title: "Graphs tell the story",
+        minutes: 9,
+        blocks: [
+          { type: "text", md: m`Three graphs describe every straight-line motion. The trick is to know what the **gradient** and the **area** mean:` },
+          {
+            type: "table",
+            headers: ["Graph", "Gradient means", "Area means", "Constant velocity looks like", "Constant acceleration looks like"],
+            rows: [
+              ["position-time (x-t)", "velocity", "–", "straight sloping line", "curve (parabola)"],
+              ["velocity-time (v-t)", "acceleration", "displacement", "horizontal line", "straight sloping line"],
+              ["acceleration-time (a-t)", "–", "change in velocity", "line on a = 0", "horizontal line (not 0)"],
+            ],
+          },
+          { type: "widget", widget: "motion-lab", props: { title: "Try each scenario and compare the three graphs" } },
+          { type: "callout", variant: "tip", md: m`On a v-t graph, the area **between the line and the time axis** is the displacement. Area **below** the axis counts as negative displacement (moving backwards).` },
+          {
+            type: "match",
+            id: "graph-match",
+            title: "Match the graph to the motion",
+            pairs: [
+              { left: "Horizontal line on a v-t graph", right: "Constant velocity" },
+              { left: "Horizontal line on an x-t graph", right: "At rest" },
+              { left: "Straight line sloping up on a v-t graph", right: "Uniform acceleration" },
+              { left: "Straight sloping line on an x-t graph", right: "Constant velocity (not zero)" },
+              { left: "v-t line crossing the time axis", right: "Changing direction" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "equations",
+        title: "The four equations of motion",
+        minutes: 10,
+        blocks: [
+          { type: "text", md: m`When the acceleration is **constant**, four equations link the five quantities $v_i$, $v_f$, $a$, $\Delta t$ and $\Delta x$. Each equation leaves one out – so pick the one without the quantity you don't know and don't need.` },
+          {
+            type: "table",
+            headers: ["Equation", "Leaves out"],
+            rows: [
+              [m`$v_f = v_i + a\Delta t$`, m`$\Delta x$`],
+              [m`$\Delta x = v_i\Delta t + \tfrac{1}{2}a\Delta t^2$`, m`$v_f$`],
+              [m`$v_f^2 = v_i^2 + 2a\Delta x$`, m`$\Delta t$`],
+              [m`$\Delta x = \left(\frac{v_i + v_f}{2}\right)\Delta t$`, m`$a$`],
+            ],
+          },
+          {
+            type: "sequence",
+            id: "motion-method",
+            title: "How to solve any equation-of-motion problem",
+            steps: ["Choose a positive direction", "List the given values: vᵢ, v_f, a, Δt, Δx", "Mark the unknown you want", "Pick the equation that has no missing quantity you don't need", "Substitute with signs and units, then solve"],
+            explain: "Writing the list first is the secret: it shows you which equation to use. In the exam, the formula and the substitution each earn a mark.",
+          },
+          {
+            type: "worked",
+            title: "Braking for a robot",
+            problem: m`A car travels at $20\ \text{m·s}^{-1}$ when the driver sees a red robot $50\ \text{m}$ ahead. She brakes with a constant deceleration of $5\ \text{m·s}^{-2}$. Does she stop before the robot?`,
+            steps: [
+              { md: m`Take the direction of motion as positive: $v_i = 20$, $v_f = 0$, $a = -5$, $\Delta x = ?$`, why: "Deceleration means the acceleration points backwards, so it is negative." },
+              { md: m`No time is given or needed → use $v_f^2 = v_i^2 + 2a\Delta x$` },
+              { md: m`$0 = 20^2 + 2(-5)\Delta x \Rightarrow \Delta x = 40\ \text{m}$` },
+              { md: m`$40\ \text{m} < 50\ \text{m}$, so she stops $10\ \text{m}$ before the robot. 🚦` },
+            ],
+          },
+          {
+            type: "practice",
+            id: "eq-motion-practice",
+            problems: [
+              { q: m`A train starts from rest and accelerates at $0{,}8\ \text{m·s}^{-2}$ for $25\ \text{s}$. Calculate its final velocity.`, answer: "20", unit: "m·s⁻¹", solution: m`$$v_f = v_i + a\Delta t = 0 + (0{,}8)(25) = 20\ \text{m·s}^{-1}$$` },
+              { q: m`How far does the train in the previous question travel in those $25\ \text{s}$?`, answer: "250", unit: "m", solution: m`$$\Delta x = v_i\Delta t + \tfrac{1}{2}a\Delta t^2 = 0 + \tfrac{1}{2}(0{,}8)(25)^2 = 250\ \text{m}$$` },
+              { q: m`A cheetah accelerates from $5\ \text{m·s}^{-1}$ to $25\ \text{m·s}^{-1}$ over $45\ \text{m}$. Calculate its acceleration.`, answer: "6.67", unit: "m·s⁻²", solution: m`$$v_f^2 = v_i^2 + 2a\Delta x \Rightarrow 25^2 = 5^2 + 2a(45) \Rightarrow a = \frac{600}{90} = 6{,}67\ \text{m·s}^{-2}$$` },
+              { q: m`A bus slows uniformly from $15\ \text{m·s}^{-1}$ to $5\ \text{m·s}^{-1}$ in $8\ \text{s}$. How far does it travel while slowing down?`, answer: "80", unit: "m", solution: m`$$\Delta x = \left(\frac{v_i + v_f}{2}\right)\Delta t = \left(\frac{15 + 5}{2}\right)(8) = 80\ \text{m}$$` },
+            ],
+          },
+        ],
+      },
+      {
+        id: "drill",
+        title: "Endless practice & quick check",
+        minutes: 8,
+        blocks: [
+          { type: "widget", widget: "drill", props: { generators: ["eq-motion", "speed-velocity"], title: "Equations of motion drill" } },
+          { type: "keypoints", points: ["Gradient of x-t = velocity; gradient of v-t = acceleration; area under v-t = displacement.", "Use the equations of motion ONLY when the acceleration is constant.", "List vᵢ, v_f, a, Δt, Δx – then choose the equation.", "Signs matter: pick a positive direction and stick to it."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "eq-motion-quiz",
+            questions: [
+              { q: "The gradient of a velocity-time graph gives…", options: ["displacement", "acceleration", "speed", "position"], answer: 1, explain: m`Gradient $= \frac{\Delta v}{\Delta t} = a$.` },
+              { q: "The area under a velocity-time graph gives…", options: ["acceleration", "time", "displacement", "force"], answer: 2, explain: "Velocity × time = displacement." },
+              { q: m`Which equation would you use if the time is not given and not asked?`, options: [m`$v_f = v_i + a\Delta t$`, m`$\Delta x = v_i\Delta t + \tfrac{1}{2}a\Delta t^2$`, m`$v_f^2 = v_i^2 + 2a\Delta x$`, m`$\Delta x = \frac{v_i + v_f}{2}\Delta t$`], answer: 2, explain: m`Only $v_f^2 = v_i^2 + 2a\Delta x$ has no $\Delta t$.` },
+              { q: "A position-time graph is a curve that gets steeper. The object is…", options: ["at rest", "moving at constant velocity", "speeding up", "slowing down"], answer: 2, explain: "A steeper gradient means a bigger velocity." },
+              { q: m`An object starts at rest and accelerates at $2\ \text{m·s}^{-2}$. After $3\ \text{s}$ its velocity is…`, options: [m`$2\ \text{m·s}^{-1}$`, m`$6\ \text{m·s}^{-1}$`, m`$9\ \text{m·s}^{-1}$`, m`$1{,}5\ \text{m·s}^{-1}$`], answer: 1, explain: m`$v_f = 0 + 2(3) = 6\ \text{m·s}^{-1}$.` },
+            ],
+          },
+          {
+            type: "exam",
+            question: {
+              id: "g10-motion-lesson-exam",
+              q: m`A sprinter starts from rest and reaches $10\ \text{m·s}^{-1}$ in $4\ \text{s}$ with constant acceleration. She then runs at this constant velocity for a further $6\ \text{s}$. (a) Calculate her acceleration. (b) Calculate the total distance covered in the 10 s.`,
+              marks: 6,
+              level: "analysis",
+              memo: [m`$a = \frac{v_f - v_i}{\Delta t}$`, m`$a = \frac{10 - 0}{4} = 2{,}5\ \text{m·s}^{-2}$`, m`First 4 s: $\Delta x = \left(\frac{0 + 10}{2}\right)(4)$`, m`$= 20\ \text{m}$`, m`Next 6 s: $\Delta x = (10)(6) = 60\ \text{m}$`, m`Total $= 80\ \text{m}$`],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Energy
+  {
+    slug: "mechanical-energy",
+    topic: "g10-energy",
+    order: 1,
+    title: "Potential, kinetic & mechanical energy",
+    tagline: "Energy can't be created or destroyed – it just changes form.",
+    emoji: "🎢",
+    caps: "CAPS Gr 10 · Mechanics: gravitational potential energy, kinetic energy, mechanical energy and the conservation of mechanical energy (in the absence of dissipative forces).",
+    objectives: [
+      m`Calculate $E_p = mgh$ and $E_k = \tfrac{1}{2}mv^2$`,
+      "State the principle of conservation of mechanical energy",
+      "Use energy conservation to find speeds and heights",
+    ],
+    styles: ["visual", "kinaesthetic"],
+    xp: 70,
+    terms: [
+      { term: "Gravitational potential energy", def: m`The energy an object has because of its position (height) relative to a reference point: $E_p = mgh$.` },
+      { term: "Kinetic energy", def: m`The energy an object has because of its motion: $E_k = \tfrac{1}{2}mv^2$.` },
+      { term: "Mechanical energy", def: m`The sum of gravitational potential and kinetic energy: $E_M = E_p + E_k$.` },
+      { term: "Conservation of mechanical energy", def: "In an isolated system (no friction or air resistance), the total mechanical energy remains constant." },
+      { term: "Joule (J)", def: "The SI unit of energy. 1 J = 1 kg·m²·s⁻²." },
+      { term: "g", def: m`The gravitational acceleration near the Earth's surface, $9{,}8\ \text{m·s}^{-2}$.` },
+    ],
+    chunks: [
+      {
+        id: "hook",
+        title: "Gold Reef City's big drop",
+        minutes: 5,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`A roller coaster has no engine on the way down. The chain lifts it to the top, giving it **potential energy**; the drop turns that into **kinetic energy** (speed); the next hill turns it back into height. Watch the energy bars below trade places.` },
+          { type: "widget", widget: "energy-lab" },
+        ],
+      },
+      {
+        id: "formulas",
+        title: "Two kinds of mechanical energy",
+        minutes: 8,
+        blocks: [
+          { type: "text", md: m`**Gravitational potential energy** depends on mass and height: $$E_p = mgh$$ **Kinetic energy** depends on mass and speed: $$E_k = \tfrac{1}{2}mv^2$$ Notice the **square**: double the speed and the kinetic energy becomes **four times** bigger. That's why speeding is so dangerous.` },
+          {
+            type: "worked",
+            title: "A falling coconut",
+            problem: m`A $1{,}5\ \text{kg}$ coconut hangs $12\ \text{m}$ above the beach. (a) Calculate its potential energy. (b) It falls. Ignoring air resistance, calculate its speed just before it hits the sand.`,
+            steps: [
+              { md: m`(a) $E_p = mgh = (1{,}5)(9{,}8)(12) = 176{,}4\ \text{J}$` },
+              { md: m`(b) Mechanical energy is conserved: $E_{M,top} = E_{M,bottom}$`, why: "No air resistance → no energy is lost to heat or sound." },
+              { md: m`$mgh + 0 = 0 + \tfrac{1}{2}mv^2 \Rightarrow 176{,}4 = \tfrac{1}{2}(1{,}5)v^2$` },
+              { md: m`$v = 15{,}34\ \text{m·s}^{-1}$`, why: m`Or use $v = \sqrt{2gh}$ – the mass cancels out, so a heavy and a light object land at the same speed.` },
+            ],
+          },
+          { type: "callout", variant: "exam", md: m`Start energy answers with the principle: "**$E_{M,top} = E_{M,bottom}$**" or "$(E_p + E_k)_{top} = (E_p + E_k)_{bottom}$". Then substitute. Markers give a mark for that line.` },
+          {
+            type: "practice",
+            id: "energy-practice",
+            problems: [
+              { q: m`Calculate the kinetic energy of a $70\ \text{kg}$ runner moving at $8\ \text{m·s}^{-1}$.`, answer: "2240", unit: "J", solution: m`$$E_k = \tfrac{1}{2}mv^2 = \tfrac{1}{2}(70)(8)^2 = 2\,240\ \text{J}$$` },
+              { q: m`A $500\ \text{g}$ book is lifted onto a shelf $2\ \text{m}$ high. Calculate the gain in its potential energy.`, answer: "9.8", unit: "J", hint: "Change grams to kilograms first.", solution: m`$$E_p = mgh = (0{,}5)(9{,}8)(2) = 9{,}8\ \text{J}$$` },
+              { q: m`A ball is dropped from $5\ \text{m}$. Ignoring air resistance, calculate its speed when it is $1\ \text{m}$ above the ground.`, answer: "8.85", unit: "m·s⁻¹", hint: m`It has fallen $4\ \text{m}$: $\tfrac{1}{2}mv^2 = mg(4)$.`, solution: m`$$mg(5) = mg(1) + \tfrac{1}{2}mv^2 \Rightarrow v = \sqrt{2(9{,}8)(4)} = 8{,}85\ \text{m·s}^{-1}$$` },
+              { q: m`If a car's speed doubles, by what factor does its kinetic energy increase?`, answer: "4", solution: m`$E_k \propto v^2$, so $(2)^2 = 4$ times.` },
+            ],
+          },
+        ],
+      },
+      {
+        id: "check",
+        title: "Drill & quick check",
+        minutes: 6,
+        blocks: [
+          { type: "widget", widget: "drill", props: { generators: ["mech-energy"], title: "Energy drill" } },
+          { type: "keypoints", points: [m`$E_p = mgh$, $E_k = \tfrac{1}{2}mv^2$, $E_M = E_p + E_k$.`, "With no friction or air resistance, mechanical energy is conserved.", "Mass cancels in free-fall energy problems.", "Energy is a scalar – no direction."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "energy-quiz",
+            questions: [
+              { q: "At the highest point of a swing, a child has maximum…", options: ["kinetic energy", "potential energy", "speed", "mass"], answer: 1, explain: "Highest point = most height = most Eₚ (and least speed)." },
+              { q: "The unit of energy is the…", options: ["watt", "newton", "joule", "pascal"], answer: 2, explain: "Energy is measured in joules (J)." },
+              { q: "A 2 kg ball moves at 3 m·s⁻¹. Its kinetic energy is…", options: ["3 J", "6 J", "9 J", "18 J"], answer: 2, explain: m`$\tfrac{1}{2}(2)(3)^2 = 9\ \text{J}$.` },
+              { q: "Mechanical energy is NOT conserved when…", options: ["an object falls in a vacuum", "friction acts", "an object is at rest", "the mass is large"], answer: 1, explain: "Friction turns mechanical energy into heat." },
+              { q: "Two balls, 1 kg and 5 kg, are dropped from the same height (no air resistance). Just before landing…", options: ["the 5 kg ball is faster", "the 1 kg ball is faster", "they have the same speed", "they have the same kinetic energy"], answer: 2, explain: m`$v = \sqrt{2gh}$ – no mass in it. (Their kinetic energies differ though.)` },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Waves
+  {
+    slug: "pulses-and-waves",
+    topic: "g10-waves",
+    order: 1,
+    title: "Pulses, superposition & waves",
+    tagline: "From a flick of a rope to the wave equation v = fλ.",
+    emoji: "〰️",
+    caps: "CAPS Gr 10 · Waves, sound & light: transverse pulses, superposition (constructive and destructive interference), transverse waves, longitudinal waves, wavelength, frequency, period, amplitude, wave speed.",
+    objectives: [
+      "Describe pulses and the principle of superposition",
+      "Label crest, trough, amplitude and wavelength",
+      "Tell transverse and longitudinal waves apart",
+      m`Use $v = f\lambda$ and $T = \frac{1}{f}$`,
+    ],
+    styles: ["visual", "kinaesthetic"],
+    xp: 70,
+    terms: [
+      { term: "Pulse", def: "A single disturbance in a medium." },
+      { term: "Transverse pulse", def: "A pulse in which the particles of the medium move perpendicular to the direction the pulse travels." },
+      { term: "Amplitude", def: "The maximum disturbance (displacement) of a particle from its rest (equilibrium) position." },
+      { term: "Principle of superposition", def: "When two pulses occupy the same space at the same time, the resultant displacement is the algebraic sum of the individual displacements." },
+      { term: "Constructive interference", def: "Pulses (or waves) in phase add up to give a bigger resultant amplitude." },
+      { term: "Destructive interference", def: "A crest and a trough meet and cancel (partly or completely)." },
+      { term: "Wave", def: "A succession of pulses; a wave transfers energy without transferring matter." },
+      { term: "Longitudinal wave", def: "A wave in which the particles of the medium move parallel to the direction the wave travels (compressions and rarefactions)." },
+      { term: "Wavelength (λ)", def: "The distance between two successive points in phase, e.g. two crests or two compressions." },
+      { term: "Frequency (f)", def: "The number of complete waves passing a point per second, in hertz (Hz)." },
+      { term: "Period (T)", def: m`The time for one complete wave: $T = \frac{1}{f}$.` },
+      { term: "Wave equation", def: m`$v = f\lambda$` },
+    ],
+    chunks: [
+      {
+        id: "pulses",
+        title: "Pulses meet: superposition",
+        minutes: 8,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`At a soccer match at FNB Stadium, a Mexican wave travels round the stands – but every fan just stands up and sits down in their own seat. The **energy** moves around the stadium; the **people** (the medium) don't.` },
+          { type: "text", md: m`Flick a rope once and a single **pulse** travels along it. When two pulses meet, they don't bounce off each other – they pass **through** each other. While they overlap, their displacements **add**.` },
+          { type: "widget", widget: "pulse-lab" },
+          { type: "callout", variant: "memory", md: m`**Same side → add up (constructive). Opposite sides → cancel (destructive).** Then both carry on as if nothing happened.` },
+        ],
+      },
+      {
+        id: "waves",
+        title: "Transverse and longitudinal waves",
+        minutes: 9,
+        blocks: [
+          { type: "text", md: m`Keep flicking and you make a **wave** – a whole train of pulses. In a **transverse** wave the particles move **up and down** while the wave moves **along** (like the rope). In a **longitudinal** wave the particles move **back and forth** in the same direction the wave travels (like a slinky pushed in and out).` },
+          { type: "widget", widget: "wave-lab" },
+          {
+            type: "table",
+            headers: ["", "Transverse", "Longitudinal"],
+            rows: [
+              ["Particle movement", "perpendicular to the wave", "parallel to the wave"],
+              ["High points / squashed parts", "crests", "compressions"],
+              ["Low points / spread parts", "troughs", "rarefactions"],
+              ["Examples", "ripples, rope waves, light (EM)", "sound, slinky, P-waves in earthquakes"],
+            ],
+          },
+          { type: "widget", widget: "wave-lab", props: { mode: "longitudinal", title: "Now see a longitudinal wave" } },
+        ],
+      },
+      {
+        id: "equation",
+        title: "The wave equation",
+        minutes: 9,
+        blocks: [
+          { type: "text", md: m`In one period $T$ a wave moves forward one wavelength $\lambda$. So speed $= \frac{\text{distance}}{\text{time}} = \frac{\lambda}{T}$, and because $f = \frac{1}{T}$: $$v = f\lambda$$` },
+          {
+            type: "worked",
+            title: "Waves on Muizenberg beach",
+            problem: m`Surfers notice that the crests of the waves are $12\ \text{m}$ apart and that 5 crests pass the pier every $20\ \text{s}$. Calculate (a) the frequency, (b) the period and (c) the speed of the waves.`,
+            steps: [
+              { md: m`(a) $f = \frac{5}{20} = 0{,}25\ \text{Hz}$`, why: "Frequency = number of waves per second." },
+              { md: m`(b) $T = \frac{1}{f} = \frac{1}{0{,}25} = 4\ \text{s}$` },
+              { md: m`(c) $v = f\lambda = (0{,}25)(12) = 3\ \text{m·s}^{-1}$` },
+            ],
+          },
+          {
+            type: "practice",
+            id: "wave-practice",
+            problems: [
+              { q: m`A wave has a frequency of $50\ \text{Hz}$ and a wavelength of $0{,}4\ \text{m}$. Calculate its speed.`, answer: "20", unit: "m·s⁻¹", solution: m`$$v = f\lambda = (50)(0{,}4) = 20\ \text{m·s}^{-1}$$` },
+              { q: m`Calculate the period of a wave with a frequency of $200\ \text{Hz}$.`, answer: "0.005", unit: "s", solution: m`$$T = \frac{1}{f} = \frac{1}{200} = 0{,}005\ \text{s}$$` },
+              { q: m`A wave travels at $6\ \text{m·s}^{-1}$ with a frequency of $1{,}5\ \text{Hz}$. Calculate the wavelength.`, answer: "4", unit: "m", solution: m`$$\lambda = \frac{v}{f} = \frac{6}{1{,}5} = 4\ \text{m}$$` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["wave-equation"], title: "Wave equation drill" } },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 5,
+        blocks: [
+          { type: "keypoints", points: ["Waves transfer energy, not matter.", "Superposition: displacements add algebraically.", "Transverse: perpendicular; longitudinal: parallel.", m`$v = f\lambda$ and $T = \frac{1}{f}$.`] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "waves-quiz",
+            questions: [
+              { q: "A pulse of amplitude +3 cm meets a pulse of amplitude −1 cm. The resultant amplitude is…", options: ["4 cm", "2 cm", "−4 cm", "3 cm"], answer: 1, explain: "3 + (−1) = 2 cm: destructive interference." },
+              { q: "In a longitudinal wave, the particles move…", options: ["perpendicular to the wave", "parallel to the wave", "in circles", "not at all"], answer: 1, explain: "Back and forth along the direction of the wave." },
+              { q: "The distance between two successive crests is the…", options: ["amplitude", "period", "wavelength", "frequency"], answer: 2, explain: "Wavelength λ." },
+              { q: "If the frequency of a wave doubles in the same medium, the wavelength…", options: ["doubles", "halves", "stays the same", "becomes four times bigger"], answer: 1, explain: m`The speed is fixed by the medium, so $\lambda = \frac{v}{f}$ halves.` },
+              { q: "Sound is an example of a…", options: ["transverse wave", "longitudinal wave", "pulse only", "electromagnetic wave"], answer: 1, explain: "Sound travels as compressions and rarefactions." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Sound
+  {
+    slug: "sound",
+    topic: "g10-sound",
+    order: 1,
+    title: "Sound: pitch, loudness & echoes",
+    tagline: "Why a vuvuzela is loud, a whistle is high – and bats can see in the dark.",
+    emoji: "🔊",
+    caps: "CAPS Gr 10 · Waves, sound & light: sound as a longitudinal wave, speed of sound in different media, pitch and frequency, loudness and amplitude, tone, ultrasound and its uses, echoes.",
+    objectives: [
+      "Explain how sound travels and why it needs a medium",
+      "Link pitch to frequency and loudness to amplitude",
+      "Calculate distances from echoes",
+      "Describe uses of ultrasound",
+    ],
+    styles: ["auditory", "visual"],
+    xp: 60,
+    terms: [
+      { term: "Sound wave", def: "A longitudinal (pressure) wave: a series of compressions and rarefactions travelling through a medium." },
+      { term: "Pitch", def: "How high or low a sound is – determined by its frequency." },
+      { term: "Loudness", def: "How strong a sound is – determined by its amplitude (and the sensitivity of the ear)." },
+      { term: "Audible range", def: "Humans hear frequencies from about 20 Hz to 20 000 Hz." },
+      { term: "Ultrasound", def: "Sound with a frequency above 20 kHz – too high for humans to hear." },
+      { term: "Echo", def: "A reflected sound wave." },
+      { term: "Speed of sound", def: m`About $340\ \text{m·s}^{-1}$ in air; faster in liquids (≈ 1 500 m·s⁻¹ in water) and fastest in solids.` },
+    ],
+    chunks: [
+      {
+        id: "hook",
+        title: "Feel the vuvuzela",
+        minutes: 5,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`Blow a vuvuzela and the air inside vibrates, pushing the air molecules next to it. Those push the next ones… a chain of **compressions** and **rarefactions** reaches your ear. No air, no sound: in space nobody can hear you scream!` },
+          { type: "widget", widget: "wave-lab", props: { mode: "longitudinal", title: "A sound wave in air" } },
+          { type: "text", md: m`Sound travels **faster in solids and liquids** than in gases because the particles are closer together and pass the vibration on more quickly. Put your ear on a railway line and you hear the train long before the sound arrives through the air.` },
+        ],
+      },
+      {
+        id: "pitch-loudness",
+        title: "Pitch and loudness",
+        minutes: 7,
+        blocks: [
+          {
+            type: "table",
+            headers: ["Property of the sound", "Property of the wave", "Change it"],
+            rows: [
+              ["Pitch (high/low)", "frequency", "higher frequency → higher pitch"],
+              ["Loudness (soft/loud)", "amplitude", "bigger amplitude → louder"],
+              ["Quality (tone)", "wave shape", "a guitar and a piano playing the same note sound different"],
+            ],
+          },
+          { type: "callout", variant: "safety", md: m`Sound is measured in **decibels (dB)**. Long exposure above about 85 dB (a busy taxi rank, earphones turned up) damages the tiny hair cells in your inner ear – and they don't grow back. Keep the volume below 60 %.` },
+          {
+            type: "match",
+            id: "sound-match",
+            title: "Match the sound to the wave",
+            pairs: [
+              { left: "A whistle (high pitch)", right: "High frequency, short wavelength" },
+              { left: "A drum (low pitch)", right: "Low frequency, long wavelength" },
+              { left: "Shouting", right: "Large amplitude" },
+              { left: "Whispering", right: "Small amplitude" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "echoes",
+        title: "Echoes and ultrasound",
+        minutes: 9,
+        blocks: [
+          { type: "text", md: m`An **echo** is sound that reflects off a surface. Because the sound goes **there and back**, the distance to the surface is **half** of the total distance travelled: $$d = \frac{v\Delta t}{2}$$` },
+          {
+            type: "worked",
+            title: "Fishing with sonar",
+            problem: m`A fishing boat off Hout Bay sends an ultrasound pulse straight down. The echo from a shoal of fish returns after $0{,}06\ \text{s}$. Sound travels at $1\,500\ \text{m·s}^{-1}$ in sea water. How deep are the fish?`,
+            steps: [
+              { md: m`Total distance $= v\Delta t = (1\,500)(0{,}06) = 90\ \text{m}$` },
+              { md: m`Depth $= \frac{90}{2} = 45\ \text{m}$`, why: "The pulse went down to the fish and back up again." },
+            ],
+          },
+          { type: "text", md: m`**Ultrasound** (above 20 kHz) has short wavelengths, so it reflects off small objects. Uses: pregnancy scans, finding cracks in metal, sonar on ships, cleaning jewellery, and the echolocation that **bats** and **dolphins** use to "see".` },
+          {
+            type: "practice",
+            id: "echo-practice",
+            problems: [
+              { q: m`You clap in front of a cliff and hear the echo $1{,}2\ \text{s}$ later. Take the speed of sound as $340\ \text{m·s}^{-1}$. How far away is the cliff?`, answer: "204", unit: "m", solution: m`$$d = \frac{v\Delta t}{2} = \frac{(340)(1{,}2)}{2} = 204\ \text{m}$$` },
+              { q: m`A bat hears an echo from a moth $0{,}02\ \text{s}$ after it squeaks. How far away is the moth? ($v = 340\ \text{m·s}^{-1}$)`, answer: "3.4", unit: "m", solution: m`$$d = \frac{(340)(0{,}02)}{2} = 3{,}4\ \text{m}$$` },
+              { q: m`What is the wavelength of a $34\ \text{kHz}$ ultrasound wave in air ($340\ \text{m·s}^{-1}$)?`, answer: "0.01", unit: "m", hint: "Change kHz to Hz first.", solution: m`$$\lambda = \frac{v}{f} = \frac{340}{34\,000} = 0{,}01\ \text{m} = 1\ \text{cm}$$` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["echo", "wave-equation"], title: "Sound drill" } },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 4,
+        blocks: [
+          { type: "keypoints", points: ["Sound is a longitudinal wave and needs a medium.", "Pitch ↔ frequency; loudness ↔ amplitude.", m`Echo distance $= \frac{v\Delta t}{2}$.`, "Ultrasound: above 20 kHz – scans, sonar, bats."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "sound-quiz",
+            questions: [
+              { q: "Sound cannot travel through…", options: ["water", "steel", "air", "a vacuum"], answer: 3, explain: "There are no particles in a vacuum to pass on the vibration." },
+              { q: "A sound with a higher frequency has a…", options: ["higher pitch", "lower pitch", "louder volume", "slower speed"], answer: 0, explain: "Pitch depends on frequency." },
+              { q: "Ultrasound has a frequency…", options: ["below 20 Hz", "between 20 Hz and 20 kHz", "above 20 kHz", "of exactly 340 Hz"], answer: 2, explain: "Above the human hearing range." },
+              { q: "Sound travels fastest in…", options: ["air", "water", "steel", "a vacuum"], answer: 2, explain: "Particles in solids are closest together." },
+              { q: "Making a sound louder changes its…", options: ["frequency", "wavelength", "amplitude", "speed"], answer: 2, explain: "Loudness depends on amplitude." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ EM radiation
+  {
+    slug: "electromagnetic-radiation",
+    topic: "g10-em",
+    order: 1,
+    title: "Electromagnetic radiation & photons",
+    tagline: "Radio waves, light and X-rays are all the same thing – at different energies.",
+    emoji: "🌈",
+    caps: "CAPS Gr 10 · Waves, sound & light: dual (wave-particle) nature of EM radiation, nature of EM waves, the electromagnetic spectrum, nature of photons, E = hf.",
+    objectives: [
+      "Describe EM radiation as both a wave and a stream of photons",
+      "Put the EM spectrum in order and give uses of each region",
+      m`Calculate photon energy with $E = hf$ and $c = f\lambda$`,
+      "Explain why high-frequency radiation is more dangerous",
+    ],
+    styles: ["visual", "read-write"],
+    xp: 60,
+    terms: [
+      { term: "Electromagnetic wave", def: "A transverse wave of mutually perpendicular, oscillating electric and magnetic fields. It needs no medium." },
+      { term: "Speed of light", def: m`All EM waves travel at $c = 3 \times 10^{8}\ \text{m·s}^{-1}$ in a vacuum.` },
+      { term: "Photon", def: "A quantum (packet) of energy of electromagnetic radiation." },
+      { term: "Photon energy", def: m`$E = hf = \frac{hc}{\lambda}$, with Planck's constant $h = 6{,}63 \times 10^{-34}\ \text{J·s}$.` },
+      { term: "Wave-particle duality", def: "EM radiation behaves like a wave (e.g. diffraction) and like a particle (e.g. the photoelectric effect)." },
+      { term: "EM spectrum (low to high f)", def: "Radio, microwave, infrared, visible, ultraviolet, X-rays, gamma rays." },
+      { term: "Penetrating ability", def: "The higher the frequency (energy) of EM radiation, the more penetrating and ionising it is." },
+    ],
+    chunks: [
+      {
+        id: "spectrum",
+        title: "One family, many members",
+        minutes: 9,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`The radio station you listen to in the taxi, the microwave that heats your pap, the TV remote, sunlight, the X-ray at the clinic and the gamma rays used to treat cancer at Groote Schuur – all of them are **electromagnetic waves**. They differ only in wavelength and frequency.` },
+          { type: "widget", widget: "em-spectrum" },
+          { type: "callout", variant: "memory", md: m`Order from lowest to highest frequency: **R**ich **M**en **I**n **V**egas **U**se **X**-pensive **G**adgets – Radio, Microwave, Infrared, Visible, Ultraviolet, X-rays, Gamma.` },
+          {
+            type: "sequence",
+            id: "em-order",
+            title: "Put the EM spectrum in order of increasing frequency",
+            steps: ["Radio waves", "Microwaves", "Infrared", "Visible light", "Ultraviolet", "X-rays", "Gamma rays"],
+            explain: "Frequency increases (and wavelength decreases) from radio to gamma. Energy per photon increases in the same order.",
+          },
+        ],
+      },
+      {
+        id: "photons",
+        title: "Photons and E = hf",
+        minutes: 9,
+        blocks: [
+          { type: "text", md: m`Light spreads out and interferes like a **wave** – but it also arrives in tiny packets of energy called **photons**, like a stream of particles. Each photon carries energy $$E = hf = \frac{hc}{\lambda}$$ where $h = 6{,}63 \times 10^{-34}\ \text{J·s}$ (Planck's constant). Higher frequency → more energetic photons.` },
+          {
+            type: "worked",
+            title: "Energy of a green photon",
+            problem: m`Green light has a wavelength of $530\ \text{nm}$. Calculate (a) its frequency and (b) the energy of one photon.`,
+            steps: [
+              { md: m`$\lambda = 530 \times 10^{-9}\ \text{m}$`, why: "1 nm = 10⁻⁹ m – always convert to SI units." },
+              { md: m`(a) $f = \frac{c}{\lambda} = \frac{3 \times 10^{8}}{530 \times 10^{-9}} = 5{,}66 \times 10^{14}\ \text{Hz}$` },
+              { md: m`(b) $E = hf = (6{,}63 \times 10^{-34})(5{,}66 \times 10^{14}) = 3{,}75 \times 10^{-19}\ \text{J}$` },
+            ],
+          },
+          { type: "callout", variant: "tip", md: m`Typing powers of ten: enter $3 \times 10^{8}$ as **3e8** (or **3 × 10^8**) – the answer box understands both.` },
+          {
+            type: "practice",
+            id: "photon-practice",
+            problems: [
+              { q: m`Calculate the energy of a photon with a frequency of $6 \times 10^{14}\ \text{Hz}$.`, answer: "3.978e-19", unit: "J", solution: m`$$E = hf = (6{,}63 \times 10^{-34})(6 \times 10^{14}) = 3{,}98 \times 10^{-19}\ \text{J}$$` },
+              { q: m`A radio station broadcasts at $94{,}5\ \text{MHz}$. Calculate the wavelength of its waves.`, answer: "3.17", unit: "m", hint: m`1 MHz $= 10^{6}$ Hz.`, solution: m`$$\lambda = \frac{c}{f} = \frac{3 \times 10^{8}}{94{,}5 \times 10^{6}} = 3{,}17\ \text{m}$$` },
+              { q: m`Calculate the energy of an X-ray photon with a wavelength of $1 \times 10^{-10}\ \text{m}$.`, answer: "1.989e-15", unit: "J", solution: m`$$E = \frac{hc}{\lambda} = \frac{(6{,}63 \times 10^{-34})(3 \times 10^{8})}{1 \times 10^{-10}} = 1{,}99 \times 10^{-15}\ \text{J}$$` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["photon-energy"], title: "Photon energy drill" } },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 5,
+        blocks: [
+          { type: "callout", variant: "safety", md: m`**Ionising** radiation (UV, X-rays, gamma) has enough energy per photon to knock electrons out of atoms and damage DNA. Wear sunscreen, and radiographers stand behind a lead screen when they take X-rays.` },
+          { type: "keypoints", points: ["EM waves are transverse, need no medium and travel at c = 3 × 10⁸ m·s⁻¹.", "Radio → gamma: frequency and energy increase, wavelength decreases.", m`$E = hf = \frac{hc}{\lambda}$.`, "Light has a dual nature: wave AND particle (photon)."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "em-quiz",
+            questions: [
+              { q: "Which EM radiation has the longest wavelength?", options: ["Gamma rays", "Visible light", "Radio waves", "X-rays"], answer: 2, explain: "Radio waves have the lowest frequency and longest wavelength." },
+              { q: "Which photon carries the most energy?", options: ["Infrared", "Red light", "Blue light", "Ultraviolet"], answer: 3, explain: "Highest frequency of the four → most energy." },
+              { q: "EM waves are…", options: ["longitudinal and need a medium", "transverse and need no medium", "longitudinal and need no medium", "transverse and need a medium"], answer: 1, explain: "Oscillating electric and magnetic fields – they travel through a vacuum." },
+              { q: "A photon is…", options: ["a type of electron", "a packet of EM energy", "a sound particle", "a positive charge"], answer: 1, explain: "A quantum of electromagnetic energy." },
+              { q: "Microwave ovens and Wi-Fi both use…", options: ["infrared", "microwaves", "radio waves", "ultraviolet"], answer: 1, explain: "Both use microwaves (around 2,4 GHz)." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Magnetism
+  {
+    slug: "magnetism",
+    topic: "g10-magnetism",
+    order: 1,
+    title: "Magnetism & the Earth's magnetic field",
+    tagline: "Invisible fields that steer compasses, birds and the northern lights.",
+    emoji: "🧲",
+    caps: "CAPS Gr 10 · Electricity & magnetism: magnetic field of permanent magnets, poles, attraction and repulsion, magnetic field lines, the Earth's magnetic field, compass, magnetosphere.",
+    objectives: [
+      "Describe a magnetic field and draw field lines",
+      "State that like poles repel and unlike poles attract",
+      "Explain how a compass works and describe the Earth's magnetic field",
+    ],
+    styles: ["visual", "kinaesthetic"],
+    xp: 50,
+    terms: [
+      { term: "Magnetic field", def: "A region in space where a magnet or a ferromagnetic material experiences a (non-contact) force." },
+      { term: "Magnetic field lines", def: "Lines that show the direction a compass N-pole would point: from the N-pole to the S-pole outside the magnet. They never cross." },
+      { term: "Poles", def: "The ends of a magnet, where the field is strongest. Every magnet has a north and a south pole." },
+      { term: "Law of magnetism", def: "Like poles repel; unlike poles attract." },
+      { term: "Ferromagnetic materials", def: "Materials that are strongly attracted to magnets and can be magnetised: iron, nickel, cobalt." },
+      { term: "Magnetosphere", def: "The region around the Earth where its magnetic field acts – it deflects charged particles from the Sun (solar wind)." },
+      { term: "Compass", def: "A small, freely turning magnet that lines up with the Earth's magnetic field." },
+    ],
+    chunks: [
+      {
+        id: "fields",
+        title: "Seeing the invisible",
+        minutes: 8,
+        blocks: [
+          { type: "text", md: m`Sprinkle iron filings around a bar magnet and they line up in curves from pole to pole – a picture of the **magnetic field**. We draw it with **field lines**: they leave the **north** pole, enter the **south** pole, never cross, and are closest together where the field is strongest.` },
+          { type: "widget", widget: "magnet-lab" },
+          { type: "widget", widget: "magnet-lab", props: { mode: "pair", title: "Two magnets: attract or repel?" } },
+        ],
+      },
+      {
+        id: "earth",
+        title: "The Earth is a magnet",
+        minutes: 7,
+        blocks: [
+          { type: "text", md: m`The Earth's molten iron core makes a magnetic field like a giant bar magnet. A compass needle's **north pole** points to the **geographic North Pole** – which means there is a **magnetic south pole** there (unlike poles attract!).` },
+          { type: "callout", variant: "real-world", md: m`The **magnetosphere** protects us from the **solar wind** (charged particles from the Sun). Near the poles some particles get through and make the air glow: the **aurora**. Pigeons, turtles and some birds that migrate to South Africa every summer use the Earth's field to navigate.` },
+          {
+            type: "widget",
+            widget: "sorter",
+            props: {
+              id: "magnetic-materials", title: "Magnetic or not?", buckets: ["Attracted to a magnet", "Not attracted"], colour: "var(--t-elec)",
+              items: [
+                { text: "Iron nail", bucket: "Attracted to a magnet" }, { text: "Nickel", bucket: "Attracted to a magnet" }, { text: "Cobalt", bucket: "Attracted to a magnet" }, { text: "Steel paperclip", bucket: "Attracted to a magnet" },
+                { text: "Copper wire", bucket: "Not attracted" }, { text: "Aluminium can", bucket: "Not attracted" }, { text: "Plastic ruler", bucket: "Not attracted" }, { text: "Gold ring", bucket: "Not attracted" },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 4,
+        blocks: [
+          { type: "keypoints", points: ["Field lines go from N to S outside a magnet and never cross.", "Like poles repel, unlike poles attract.", "Iron, nickel and cobalt are ferromagnetic.", "The magnetosphere shields Earth from the solar wind."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "magnet-quiz",
+            questions: [
+              { q: "Two north poles are brought close together. They…", options: ["attract", "repel", "do nothing", "become south poles"], answer: 1, explain: "Like poles repel." },
+              { q: "Magnetic field lines outside a magnet point from…", options: ["S to N", "N to S", "the middle outwards", "nowhere – they are random"], answer: 1, explain: "From the north pole to the south pole." },
+              { q: "Which material is ferromagnetic?", options: ["Copper", "Aluminium", "Iron", "Wood"], answer: 2, explain: "Iron, nickel and cobalt." },
+              { q: "Where is the magnetic field of a bar magnet strongest?", options: ["In the middle", "At the poles", "Far away", "Everywhere the same"], answer: 1, explain: "Field lines are closest together at the poles." },
+              { q: "The aurora is caused by…", options: ["moonlight", "charged particles from the Sun hitting the atmosphere", "volcanoes", "radio waves"], answer: 1, explain: "Solar wind particles guided by the Earth's magnetic field near the poles." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Electrostatics
+  {
+    slug: "electrostatics-g10",
+    topic: "g10-electrostatics",
+    order: 1,
+    title: "Static electricity",
+    tagline: "Balloons, lightning and why charge comes in tiny packets.",
+    emoji: "🎈",
+    caps: "CAPS Gr 10 · Electricity & magnetism: two kinds of charge, charging by friction, conservation of charge, quantisation of charge, charge sharing between identical spheres, polarisation.",
+    objectives: [
+      "Explain charging by friction in terms of electron transfer",
+      "Apply the conservation and quantisation of charge",
+      "Calculate charges after identical spheres touch",
+      "Explain polarisation (why a charged rod attracts paper)",
+    ],
+    styles: ["visual", "kinaesthetic"],
+    xp: 60,
+    terms: [
+      { term: "Electric charge", def: "A property of matter; there are two kinds – positive and negative. Like charges repel, unlike charges attract." },
+      { term: "Charging by friction", def: "Rubbing two materials transfers electrons from one to the other: the one that gains electrons becomes negative, the one that loses them positive." },
+      { term: "Principle of conservation of charge", def: "The net charge of an isolated system remains constant – charge is not created or destroyed, only transferred." },
+      { term: "Quantisation of charge", def: m`Every charge is a whole-number multiple of the electron's charge: $Q = nq_e$, with $q_e = 1{,}6 \times 10^{-19}\ \text{C}$.` },
+      { term: "Coulomb (C)", def: "The SI unit of charge." },
+      { term: "Charge sharing", def: m`When identical conductors touch, they share the total charge equally: $Q = \frac{Q_1 + Q_2}{2}$.` },
+      { term: "Polarisation", def: "A charged object near a neutral one makes the charges in it separate slightly, so the neutral object is attracted." },
+    ],
+    chunks: [
+      {
+        id: "friction",
+        title: "Rub, rub, zap",
+        minutes: 7,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`Rub a balloon on your hair: the hair stands up and the balloon sticks to the wall. On a dry Highveld winter's day you get a shock from a car door. A Highveld thunderstorm builds up so much charge that lightning jumps kilometres through the air.` },
+          { type: "text", md: m`All matter contains charges. Atoms have positive protons (stuck in the nucleus) and negative electrons (which can move). When two materials rub together, **electrons move** from one to the other. **Only electrons move – never protons.**` },
+          {
+            type: "sequence",
+            id: "friction-seq",
+            title: "Charging a balloon on your hair",
+            steps: ["The balloon rubs against your hair", "Electrons are transferred from the hair to the balloon", "The balloon now has extra electrons: it is negative", "Your hair has lost electrons: it is positive", "The balloon and hair attract each other (unlike charges)"],
+            explain: "The total charge is the same before and after: the balloon gained exactly as many electrons as your hair lost (conservation of charge).",
+          },
+        ],
+      },
+      {
+        id: "sharing",
+        title: "Conservation & quantisation",
+        minutes: 9,
+        blocks: [
+          { type: "widget", widget: "charge-lab", props: { mode: "share", title: "Touch & share" } },
+          {
+            type: "worked",
+            title: "Two metal spheres",
+            problem: m`Sphere A has a charge of $+8\ \text{nC}$ and identical sphere B has $-2\ \text{nC}$. They touch and separate. (a) What is the charge on each? (b) How many electrons moved, and which way?`,
+            steps: [
+              { md: m`(a) $Q = \frac{Q_A + Q_B}{2} = \frac{(+8) + (-2)}{2} = +3\ \text{nC}$ each` },
+              { md: m`(b) B went from $-2$ to $+3\ \text{nC}$: it **lost** $5\ \text{nC}$ of negative charge, so electrons moved from B to A.`, why: "Only electrons move. A became less positive because it gained electrons." },
+              { md: m`$n = \frac{\Delta Q}{q_e} = \frac{5 \times 10^{-9}}{1{,}6 \times 10^{-19}} = 3{,}13 \times 10^{10}$ electrons` },
+            ],
+          },
+          {
+            type: "practice",
+            id: "charge-practice",
+            problems: [
+              { q: m`Identical spheres with charges $+6\ \mu\text{C}$ and $+2\ \mu\text{C}$ touch. What is the charge on each afterwards (in μC)?`, answer: "4", unit: "μC", solution: m`$$Q = \frac{6 + 2}{2} = +4\ \mu\text{C}$$` },
+              { q: m`A rod gains $5 \times 10^{9}$ electrons. Calculate its charge in coulombs (as a negative number).`, answer: "-8e-10", unit: "C", solution: m`$$Q = nq_e = (5 \times 10^{9})(-1{,}6 \times 10^{-19}) = -8 \times 10^{-10}\ \text{C}$$` },
+              { q: m`Spheres of $-10\ \text{nC}$ and $+4\ \text{nC}$ touch. How many electrons are transferred?`, answer: "4.375e10", unit: "electrons", hint: "Find the new charge first, then the change in charge of ONE sphere.", solution: m`$$Q_{new} = \frac{-10 + 4}{2} = -3\ \text{nC}$$ The first sphere changes from $-10$ to $-3\ \text{nC}$: $\Delta Q = 7\ \text{nC}$ (it loses electrons to the second sphere). $$n = \frac{7 \times 10^{-9}}{1{,}6 \times 10^{-19}} = 4{,}38 \times 10^{10}\ \text{electrons}$$` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["charge-sharing"], title: "Charge sharing drill" } },
+        ],
+      },
+      {
+        id: "polarisation",
+        title: "Polarisation & quick check",
+        minutes: 6,
+        blocks: [
+          { type: "text", md: m`Why does a charged comb pick up tiny bits of **neutral** paper? The negative comb repels the electrons in the paper slightly to the far side. The near side is now a little positive and is **attracted** more strongly than the far side is repelled. The paper is **polarised**.` },
+          { type: "keypoints", points: ["Only electrons move when objects are charged.", "Charge is conserved and quantised: Q = nqₑ.", "Identical spheres share charge equally.", "A charged object can attract a neutral one by polarisation."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "electrostatics10-quiz",
+            questions: [
+              { q: "When a glass rod is rubbed with silk and becomes positive, the rod has…", options: ["gained protons", "lost electrons", "gained electrons", "lost protons"], answer: 1, explain: "Only electrons move: losing negative charge leaves the rod positive." },
+              { q: "The charge on one electron is…", options: [m`$1{,}6 \times 10^{19}\ \text{C}$`, m`$-1{,}6 \times 10^{-19}\ \text{C}$`, m`$9{,}11 \times 10^{-31}\ \text{C}$`, "1 C"], answer: 1, explain: "qₑ = −1,6 × 10⁻¹⁹ C." },
+              { q: "Spheres of +5 nC and −3 nC touch. Each ends with…", options: ["+1 nC", "+2 nC", "+4 nC", "−1 nC"], answer: 0, explain: "(5 + (−3))/2 = +1 nC." },
+              { q: "A charge of 2,4 × 10⁻¹⁹ C is impossible because…", options: ["it is too small", "it is not a whole number of electron charges", "charge must be negative", "it is too big"], answer: 1, explain: "2,4 × 10⁻¹⁹ / 1,6 × 10⁻¹⁹ = 1,5 electrons – charge is quantised." },
+              { q: "A neutral piece of paper is attracted to a charged rod because of…", options: ["conservation", "quantisation", "polarisation", "induction of protons"], answer: 2, explain: "The charges in the paper separate slightly (polarisation)." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // ------------------------------------------------------------------ Circuits
+  {
+    slug: "electric-circuits-g10",
+    topic: "g10-circuits",
+    order: 1,
+    title: "Electric circuits: current, voltage & resistance",
+    tagline: "What really happens inside the wires when you switch on the lights.",
+    emoji: "💡",
+    caps: "CAPS Gr 10 · Electricity & magnetism: emf, potential difference, current, resistance, measuring voltage and current, series and parallel resistors.",
+    objectives: [
+      "Define current, potential difference, emf and resistance",
+      "Connect ammeters in series and voltmeters in parallel",
+      "Calculate the total resistance of series and parallel resistors",
+      "Explain how current and voltage behave in series and parallel",
+    ],
+    styles: ["visual", "kinaesthetic"],
+    xp: 70,
+    terms: [
+      { term: "Current (I)", def: m`The rate of flow of charge: $I = \frac{Q}{\Delta t}$, measured in amperes (A).` },
+      { term: "Potential difference (V)", def: "The work done per unit positive charge (energy transferred per coulomb) between two points, measured in volts (V)." },
+      { term: "Emf (ε)", def: "The potential difference across a battery's terminals when no current flows – the energy the battery gives each coulomb of charge." },
+      { term: "Resistance (R)", def: m`The opposition to the flow of charge; $R = \frac{V}{I}$, measured in ohms (Ω).` },
+      { term: "Ammeter", def: "Measures current; connected in SERIES; has very low resistance." },
+      { term: "Voltmeter", def: "Measures potential difference; connected in PARALLEL; has very high resistance." },
+      { term: "Series resistors", def: m`$R_s = R_1 + R_2 + \dots$ – the same current flows through each; the potential difference is shared.` },
+      { term: "Parallel resistors", def: m`$\frac{1}{R_p} = \frac{1}{R_1} + \frac{1}{R_2} + \dots$ – each branch has the same potential difference; the current divides.` },
+      { term: "Conventional current", def: "The direction positive charge would flow: from the + terminal to the − terminal outside the battery." },
+    ],
+    chunks: [
+      {
+        id: "basics",
+        title: "Charge, current and voltage",
+        minutes: 8,
+        blocks: [
+          { type: "callout", variant: "real-world", md: m`During load-shedding a learner in Soweto wires a 12 V battery to an LED strip. Which way should she connect the strips – one after the other (series) or side by side (parallel)? By the end of this lesson you'll know which is brighter and why.` },
+          { type: "text", md: m`The **battery** gives energy to the charges; the **wires** carry them round; the **bulbs and resistors** take the energy and change it to light and heat. **Current** is how much charge flows past a point each second, $I = \frac{Q}{\Delta t}$. **Potential difference** is how much energy each coulomb gives up between two points.` },
+          { type: "callout", variant: "memory", md: m`Think of a water park: the **pump** is the battery (emf), the **height** of the slide is the potential difference, and the **number of people per second** going down the slide is the current.` },
+          { type: "widget", widget: "circuit-lab", props: { layout: "series", bulbs: true } },
+        ],
+      },
+      {
+        id: "series-parallel",
+        title: "Series vs parallel",
+        minutes: 10,
+        blocks: [
+          {
+            type: "table",
+            headers: ["", "Series", "Parallel"],
+            rows: [
+              ["Current", "the SAME through every resistor", "SPLITS between branches: $I = I_1 + I_2 + \\dots$"],
+              ["Potential difference", "SHARED: $V = V_1 + V_2 + \\dots$", "the SAME across every branch"],
+              ["Total resistance", m`$R_s = R_1 + R_2 + \dots$ (bigger)`, m`$\frac{1}{R_p} = \frac{1}{R_1} + \frac{1}{R_2}$ (smaller than the smallest)`],
+              ["One bulb blows", "all go out", "the others stay on"],
+            ],
+          },
+          { type: "widget", widget: "circuit-lab", props: { layout: "parallel", bulbs: true, title: "Compare: bulbs in parallel" } },
+          {
+            type: "worked",
+            title: "Resistors in parallel",
+            problem: m`A $6\ \Omega$ and a $3\ \Omega$ resistor are connected in parallel. Find the total resistance.`,
+            steps: [
+              { md: m`$\frac{1}{R_p} = \frac{1}{6} + \frac{1}{3} = \frac{1}{6} + \frac{2}{6} = \frac{3}{6}$` },
+              { md: m`$R_p = \frac{6}{3} = 2\ \Omega$`, why: "Don't forget to flip the fraction at the end!" },
+              { md: m`Check: $2\ \Omega$ is smaller than the smallest resistor ($3\ \Omega$) ✔`, why: "Adding a parallel branch gives the charge another path, so the total resistance always drops." },
+            ],
+          },
+          {
+            type: "practice",
+            id: "circuit10-practice",
+            problems: [
+              { q: m`Calculate the total resistance of $4\ \Omega$, $5\ \Omega$ and $11\ \Omega$ in series.`, answer: "20", unit: "Ω", solution: m`$$R_s = 4 + 5 + 11 = 20\ \Omega$$` },
+              { q: m`Calculate the total resistance of two $10\ \Omega$ resistors in parallel.`, answer: "5", unit: "Ω", solution: m`$$\frac{1}{R_p} = \frac{1}{10} + \frac{1}{10} = \frac{2}{10} \Rightarrow R_p = 5\ \Omega$$` },
+              { q: m`$30\ \text{C}$ of charge passes through a bulb in $1$ minute. Calculate the current.`, answer: "0.5", unit: "A", solution: m`$$I = \frac{Q}{\Delta t} = \frac{30}{60} = 0{,}5\ \text{A}$$` },
+              { q: m`Three identical bulbs are in series across a $12\ \text{V}$ battery. What is the potential difference across each bulb?`, answer: "4", unit: "V", solution: m`The potential difference is shared equally: $\frac{12}{3} = 4\ \text{V}$ each.` },
+            ],
+          },
+          { type: "widget", widget: "drill", props: { generators: ["resistors"], title: "Resistor drill" } },
+        ],
+      },
+      {
+        id: "check",
+        title: "Quick check",
+        minutes: 6,
+        blocks: [
+          { type: "callout", variant: "safety", md: m`Never connect a wire straight across a battery's terminals (a **short circuit**): the current is huge, the wire gets hot and the battery can burn or explode. At home, never touch electrical wiring – 230 V mains can kill.` },
+          { type: "keypoints", points: ["Ammeter in series, voltmeter in parallel.", "Series: same current, shared voltage, resistance adds.", "Parallel: same voltage, shared current, resistance drops.", "Conventional current flows from + to − in the external circuit."] },
+          { type: "terms" },
+          {
+            type: "quiz",
+            id: "circuits10-quiz",
+            questions: [
+              { q: "An ammeter is connected…", options: ["in parallel", "in series", "across the battery only", "anywhere"], answer: 1, explain: "It must measure the current flowing THROUGH the component." },
+              { q: "Two identical bulbs in parallel compared with in series are…", options: ["dimmer", "brighter", "the same", "off"], answer: 1, explain: "Each parallel bulb gets the full battery voltage." },
+              { q: "The unit of potential difference is the…", options: ["ampere", "ohm", "volt", "coulomb"], answer: 2, explain: "Volts (V) = joules per coulomb." },
+              { q: "Adding another resistor in parallel makes the total resistance…", options: ["bigger", "smaller", "unchanged", "zero"], answer: 1, explain: "Another path for the charge → less total resistance." },
+              { q: "In a series circuit, the current is…", options: ["the same everywhere", "biggest near the battery", "shared between resistors", "zero"], answer: 0, explain: "There is only one path." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
