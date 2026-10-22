@@ -687,7 +687,7 @@ $$\mathrm{HCl + H_2O \rightarrow H_3O^+ + Cl^-} \ \text{(complete)} \qquad \math
             type: "quiz",
             id: "electrochem-quiz",
             questions: [
-              { q: "In a galvanic cell, oxidation happens at the…", options: ["cathode", "anode", "salt bridge", "voltmeter"], answer: 1, explain: "AN OX." },
+              { q: "In a galvanic cell, oxidation happens at the…", options: ["cathode", "anode", "salt bridge", "voltmeter"], answer: 1, explain: "AN OX: the ANode is where OXidation happens." },
               { q: "The function of the salt bridge is to…", options: ["provide electrons", "complete the circuit and keep the solutions neutral", "stop the reaction", "measure the emf"], answer: 1, explain: "Ions move through it." },
               { q: "In an electrolytic cell the anode is…", options: ["negative", "positive", "neutral", "always made of platinum"], answer: 1, explain: "It is connected to the positive terminal of the DC source." },
               { q: "Standard conditions for a cell include a concentration of…", options: ["0,1 mol·dm⁻³", "1 mol·dm⁻³", "2 mol·dm⁻³", "any concentration"], answer: 1, explain: "1 mol·dm⁻³, 25 °C, 101,3 kPa." },
@@ -796,7 +796,7 @@ $$\mathrm{HCl + H_2O \rightarrow H_3O^+ + Cl^-} \ \text{(complete)} \qquad \math
             id: "fertiliser-quiz",
             questions: [
               { q: "The Haber process produces…", options: ["nitric acid", "ammonia", "sulfuric acid", "urea"], answer: 1, explain: "N₂ + 3H₂ ⇌ 2NH₃." },
-              { q: "The catalyst in the contact process is…", options: ["iron", "platinum", "vanadium(V) oxide", "nickel"], answer: 2, explain: "V₂O₅." },
+              { q: "The catalyst in the contact process is…", options: ["iron", "platinum", "vanadium(V) oxide", "nickel"], answer: 2, explain: "Vanadium(V) oxide, V₂O₅." },
               { q: "Which nutrient mainly promotes leaf growth?", options: ["Nitrogen", "Phosphorus", "Potassium", "Calcium"], answer: 0, explain: "Nitrogen is needed for proteins and chlorophyll." },
               { q: "In '2:3:2 (22)', the 22 is the…", options: ["mass of the bag", "percentage of the bag that is nutrients", "price", "pH"], answer: 1, explain: "22 % of the mass is N, P and K." },
               { q: "Ammonium nitrate is made by reacting ammonia with…", options: ["sulfuric acid", "nitric acid", "water", "oxygen"], answer: 1, explain: "NH₃ + HNO₃ → NH₄NO₃." },

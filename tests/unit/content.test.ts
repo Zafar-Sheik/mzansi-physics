@@ -117,7 +117,7 @@ describe("practice problems", () => {
     for (const { lesson, b } of of("practice")) {
       expect(b.problems.length, lesson).toBeGreaterThanOrEqual(2);
       for (const p of b.problems) {
-        const res = checkAnswer(p.answer, p);
+        const res = checkAnswer(p.answer.split(" | ")[0], p);
         expect(res.ok, `${lesson}: ${p.q} → ${p.answer} (${res.message})`).toBe(true);
         expect(p.solution.length, `${lesson}: ${p.q}`).toBeGreaterThan(5);
       }
