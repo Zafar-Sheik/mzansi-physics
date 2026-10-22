@@ -706,7 +706,7 @@ export const G11_PHYSICS: Lesson[] = [
             type: "quiz",
             id: "coulomb-quiz",
             questions: [
-              { q: "Both charges are doubled and the distance stays the same. The force becomes…", options: ["double", "four times bigger", "half", "the same"], answer: 1, explain: "2 × 2 = 4." },
+              { q: "Both charges are doubled and the distance stays the same. The force becomes…", options: ["double", "four times bigger", "half", "the same"], answer: 1, explain: "F ∝ Q₁Q₂, so 2 × 2 = 4 times bigger." },
               { q: "Electric field lines around a negative charge point…", options: ["away from it", "towards it", "in circles", "nowhere"], answer: 1, explain: "A positive test charge would be attracted towards it." },
               { q: "The unit of electric field strength is…", options: ["N·C⁻¹", "C·N⁻¹", "V·m", "J"], answer: 0, explain: m`$E = \frac{F}{q}$.` },
               { q: "Two charges attract. They must be…", options: ["both positive", "both negative", "opposite", "neutral"], answer: 2, explain: "Unlike charges attract." },
